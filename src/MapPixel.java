@@ -7,6 +7,7 @@ public class MapPixel {
     public MapPixel(int xPos, int yPos){
         this.xPos = xPos;
         this.yPos = yPos;
+        this.yPos = yPos;
     }
     public int getxPos(){
         return xPos;
