@@ -72,25 +72,53 @@ public class GameMap {
         int newYCenter = c.getYCenter();
         int xVelocity = (int) Math.floor(c.getxVelocity());
         int yVelocity = (int) Math.floor(c.getyVelocity());
-        //System.out.println("x: " + xVelocity + " " + c.getxVelocity());
-        //System.out.println("y: " + yVelocity + " " + c.getyVelocity());
+
+        System.out.println("x: " + xVelocity + " " + c.getxVelocity());
+        System.out.println("y: " + yVelocity + " " + c.getyVelocity());
         int size = c.getSize();
+
         for(int i = (xCenter - size); i <= (xCenter + size); i++){
             for(int j = (yCenter - size); j <= (yCenter + size); j++){
                 //System.out.println(xVelocity + " " + yVelocity);
+                if(pixelArr[i][j].getBeingUpdated()){ continue;}
                 ArrayList<String> mapObjectsHere = pixelArr[i][j].getMapObjectsHere();
 
                 ArrayList<String> mapObjectsThere = pixelArr[i+xVelocity][j+yVelocity].getMapObjectsHere(); //map objects at new location
                 //System.out.println(mapObjectsThere.contains(c.getObjID()));
-                if(!mapObjectsThere.contains(c.getObjID()) && mapObjectsHere.contains(c.getObjID())){ //if new location doesnt have the object id
+                if(!mapObjectsThere.contains(c.getObjID()) && mapObjectsHere.contains(c.getObjID()) && !pixelArr[i][j].getBeingUpdated()){ //if new location doesnt have the object id
                     //System.out.println("Successful pixel check");
-                    pixelArr[i+xVelocity][j+yVelocity].addObjID(c);
-                    pixelArr[i-(2*size-xVelocity)][j-(2*size-yVelocity)].removeObjID(c.getObjID());
+
+                    if(0 <= direction && direction <= ((Math.PI)/2)){ //bottom right quadrant
+                        pixelArr[i+xVelocity][j+yVelocity].addObjID(c);
+                        pixelArr[i+xVelocity][j+yVelocity].setBeingUpdated(true);
+                        pixelArr[xCenter*2 - i][yCenter*2 - j].removeObjID(c.getObjID());
+                        pixelArr[xCenter*2 - i][yCenter*2 - j].setBeingUpdated(true);
+                    } else if ((Math.PI/2) < direction && direction <= (Math.PI)){ //bottom left quadrant
+                        pixelArr[i+xVelocity][j+yVelocity].addObjID(c);
+                        pixelArr[i+xVelocity][j+yVelocity].setBeingUpdated(true);
+                        pixelArr[xCenter*2 - i][yCenter*2 - j].removeObjID(c.getObjID());
+                        pixelArr[xCenter*2 - i][yCenter*2 - j].setBeingUpdated(true);
+                    } else if ((Math.PI) < direction && direction <= (3*Math.PI/2)){ //top left quadrant
+                        pixelArr[i+xVelocity][j+yVelocity].addObjID(c);
+                        pixelArr[i+xVelocity][j+yVelocity].setBeingUpdated(true);
+                        pixelArr[xCenter*2 - i][yCenter*2 - j].removeObjID(c.getObjID());
+                        pixelArr[xCenter*2 - i][yCenter*2 - j].setBeingUpdated(true);
+                    } else if ((3*Math.PI/2) < direction && direction < (2*Math.PI)){ //top right quadrant
+                        pixelArr[i+xVelocity][j+yVelocity].addObjID(c);
+                        pixelArr[i+xVelocity][j+yVelocity].setBeingUpdated(true);
+                        pixelArr[xCenter*2 - i][yCenter*2 - j].removeObjID(c.getObjID());
+                        pixelArr[xCenter*2 - i][yCenter*2 - j].setBeingUpdated(true);
+                    }
+
                     //TODO: THIS IS NOT CURRENTLY WORKING AT ALL
                 }
             }
         }
-
+        for(int i = (xCenter - size-Math.abs(xVelocity)); i <= (xCenter + size+Math.abs(xVelocity)); i++) {
+            for (int j = (yCenter - size-Math.abs(yVelocity)); j <= (yCenter + size+Math.abs(yVelocity)); j++) {
+                pixelArr[i][j].setBeingUpdated(false);
+            }
+        }
     }
     public void updateMap(){
         for(Map.Entry<String, MapObject> entry : mapObjects.entrySet()){

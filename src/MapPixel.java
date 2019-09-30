@@ -3,10 +3,12 @@ import java.util.ArrayList;
 public class MapPixel {
     private int xPos;
     private int yPos;
+    private boolean beingUpdated;
     private ArrayList<String>mapObjectsHere = new ArrayList<>();
     public MapPixel(int xPos, int yPos){
         this.xPos = xPos;
         this.yPos = yPos;
+        beingUpdated = false;
     }
     public int getxPos(){
         return xPos;
@@ -14,6 +16,8 @@ public class MapPixel {
     public int getyPos(){
         return yPos;
     }
+    public boolean getBeingUpdated(){ return beingUpdated;}
+    public void setBeingUpdated(boolean setTo) { beingUpdated = setTo;}
     public ArrayList<String> getMapObjectsHere(){
         return mapObjectsHere;
     }

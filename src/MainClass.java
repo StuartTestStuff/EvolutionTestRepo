@@ -1,9 +1,13 @@
 import processing.core.PApplet;
 
 public class MainClass extends PApplet {
+    public static int iterator = 0;
     public static PApplet processing;
     GameMap gameMap = new GameMap(1000);
-    Creature creatureTest = new Creature(500,500);
+    Creature creatureTest = new Creature(500,500, Math.PI/4);
+    Creature creatureTest2 = new Creature(500,500, 3*Math.PI/4);
+    Creature creatureTest3 = new Creature(500,500, 5*Math.PI/4);
+    Creature creatureTest4 = new Creature(500,500, 7*Math.PI/4);
 
     public static void main(String[] args) {
         PApplet.main("MainClass", args);
@@ -15,6 +19,9 @@ public class MainClass extends PApplet {
     public void setup(){
         processing = this;
         gameMap.addObject(creatureTest);
+        gameMap.addObject(creatureTest2);
+        gameMap.addObject(creatureTest3);
+        gameMap.addObject(creatureTest4);
 /*
         creatureTest.testEPP(1);
         creatureTest.testEPP(3);

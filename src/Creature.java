@@ -29,7 +29,7 @@ public class Creature implements MapObject{
      * @param xCenter must be at least size away from the boundary
      * @param yCenter must be at least size away from the boundary
      */
-    public Creature(int xCenter, int yCenter){
+    public Creature(int xCenter, int yCenter,double direction){
         //TODO: add checks to make sure it will not be out of bounds
         this.objID = generateID();
         this.xCenter = xCenter;
@@ -38,7 +38,7 @@ public class Creature implements MapObject{
         this.size = DEFAULT_SIZE;
         this.speed = DEFAULT_SPEED;
         this.energyPerFrame = calcEPP(this.speed, this.size);
-        this.direction = Math.PI/4; //THIS WILL CHANGE WITH BEHAVIOR
+        this.direction = direction; //THIS WILL CHANGE WITH BEHAVIOR
     }
 
     public void setDirection(int newDirection){
@@ -49,7 +49,9 @@ public class Creature implements MapObject{
     }
     @Override
     public String generateID() {
-        return "00";
+        MainClass.iterator++;
+        return "00"+MainClass.iterator;
+
     }
     @Override
     public String getObjID(){
@@ -106,31 +108,33 @@ public class Creature implements MapObject{
     public void moveCreature(double direction){
         //direction = direction % 2*Math.PI;
         //TODO: test to make sure that the directions work properly
-        if(0 <= direction && direction <= (Math.PI/2)){ //bottom right quadrant
-            System.out.println(direction);
+        System.out.println(direction);
+        if(0 <= direction && direction <= ((Math.PI)/2)){ //bottom right quadrant
+            //System.out.println(direction);
             System.out.println(Math.cos(direction));
+            System.out.println(Math.sin(direction));
             yVelocity = (Math.sin(direction)*speed);
             xVelocity = (Math.cos(direction)*speed);
             yCenter += yVelocity;
             xCenter += xVelocity;
         } else if ((Math.PI/2) < direction && direction <= (Math.PI)){ //bottom left quadrant
-            System.out.println(direction);
-            System.out.println(Math.cos(direction));
+            //System.out.println(direction);
+            //System.out.println(Math.cos(direction));
             yVelocity = (Math.sin(direction)*speed);
-            xVelocity =  (Math.cos(direction)*speed)*-1;
+            xVelocity =  (Math.cos(direction)*speed); //times -1 maybe
             yCenter += yVelocity;
             xCenter += xVelocity;
         } else if ((Math.PI) < direction && direction <= (3*Math.PI/2)){ //top left quadrant
             System.out.println(direction);
             System.out.println(Math.cos(direction));
-            yVelocity = (Math.sin(direction)*speed)*-1;
-            xVelocity =  (Math.cos(direction)*speed)*-1;
+            yVelocity = (Math.sin(direction)*speed); //times -1 maybe
+            xVelocity =  (Math.cos(direction)*speed); //times -1 maybe
             yCenter += yVelocity;
             xCenter += xVelocity;
         } else if ((3*Math.PI/2) < direction && direction < (2*Math.PI)){ //top right quadrant
-            System.out.println(direction);
-            System.out.println(Math.cos(direction));
-            yVelocity = (Math.sin(direction)*speed)*-1;
+            //System.out.println(direction);
+            //System.out.println(Math.cos(direction));
+            yVelocity = (Math.sin(direction)*speed); //times -1 maybe
             xVelocity =  (Math.cos(direction)*speed);
             yCenter += yVelocity;
             xCenter += xVelocity;
