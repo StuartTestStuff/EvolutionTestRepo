@@ -87,7 +87,11 @@ public class GameMap {
                 //System.out.println(mapObjectsThere.contains(c.getObjID()));
                 if(!mapObjectsThere.contains(c.getObjID()) && mapObjectsHere.contains(c.getObjID()) && !pixelArr[i][j].getBeingUpdated()){ //if new location doesnt have the object id
                     //System.out.println("Successful pixel check");
-
+                    pixelArr[i+xVelocity][j+yVelocity].addObjID(c);
+                    pixelArr[i+xVelocity][j+yVelocity].setBeingUpdated(true);
+                    pixelArr[xCenter*2 - i][yCenter*2 - j].removeObjID(c.getObjID());
+                    pixelArr[xCenter*2 - i][yCenter*2 - j].setBeingUpdated(true);
+                    /*
                     if(0 <= direction && direction <= ((Math.PI)/2)){ //bottom right quadrant
                         pixelArr[i+xVelocity][j+yVelocity].addObjID(c);
                         pixelArr[i+xVelocity][j+yVelocity].setBeingUpdated(true);
@@ -108,9 +112,9 @@ public class GameMap {
                         pixelArr[i+xVelocity][j+yVelocity].setBeingUpdated(true);
                         pixelArr[xCenter*2 - i][yCenter*2 - j].removeObjID(c.getObjID());
                         pixelArr[xCenter*2 - i][yCenter*2 - j].setBeingUpdated(true);
-                    }
+                    }*/
 
-                    //TODO: THIS IS NOT CURRENTLY WORKING AT ALL
+                    //TODO: THIS CURRENTLY LEAVES BEHIND A FEW PIXELS IN THE TOP LEFT, WHEN GOING NORTHEAST AND SOUTHWEST
                 }
             }
         }

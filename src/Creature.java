@@ -8,6 +8,10 @@ public class Creature implements MapObject{
     private static final int DEFAULT_STARTING_ENERGY_STORED = 800; //subject to change
     private static final float SIZE_FACTOR = (float) (DEFAULT_SIZE * DEFAULT_SIZE /3.14); //default size makes 0 change in energy
     private static final float SPEED_FACTOR = (float) (2* DEFAULT_SPEED * DEFAULT_SPEED);
+    private static final int IN_BOUNDS = 1;
+    private static final int OUT_OF_BOUNDS = 0;
+    private static final int X_COORD = 0;
+    private static final int Y_COORD = 1;
 
     private String objID;
     private int xCenter;
@@ -25,7 +29,7 @@ public class Creature implements MapObject{
     private int sightWidth; //angle it sees in a cone
 
     /**
-     * constructor for creature using all defaults
+     * constructor for creature using all defaults, and a specified direction for testing
      * @param xCenter must be at least size away from the boundary
      * @param yCenter must be at least size away from the boundary
      */
@@ -40,7 +44,43 @@ public class Creature implements MapObject{
         this.energyPerFrame = calcEPP(this.speed, this.size);
         this.direction = direction; //THIS WILL CHANGE WITH BEHAVIOR
     }
+    public Creature(int xCenter, int yCenter){
+        //TODO: add checks to make sure it will not be out of bounds
+        this.objID = generateID();
+        this.xCenter = xCenter;
+        this.yCenter = yCenter;
+        this.energyStored = DEFAULT_STARTING_ENERGY_STORED;
+        this.size = DEFAULT_SIZE;
+        this.speed = DEFAULT_SPEED;
+        this.energyPerFrame = calcEPP(this.speed, this.size);
+        this.direction = determineDirection(); //THIS WILL CHANGE WITH BEHAVIOR
+    }
+    public double determineDirection(){
+        //TODO: find closest food and go to that direction. for now, default direction
+        boolean[] boundaryCheck = boundaryCheck();
 
+    }
+
+    /**
+     * determines if the next frame will move the creature out of bounds
+     * @return each index returns 1 if in boundaries, 0 if out of boundaries. index 0 is x coordinate, index 1 if y coordinate
+     */
+    public boolean[] boundaryCheck(){
+        boolean [] boundaryCheck =
+        int [] nextFrame = nextFrameCenter();
+        int furthestX;
+        int furthestY;
+    }
+    /**
+     * Determines coordinates on next frame given current direciton
+     * @return index 0 id x coordinate, index 1 is y coordinate
+     */
+    public int[] nextFrameCenter(){
+        int [] nextFrame = new int[2];
+        nextFrame[X_COORD] = xCenter + (int) Math.floor(xVelocity);
+        nextFrame[Y_COORD] = yCenter + (int) Math.floor(yVelocity);
+        return nextFrame;
+    }
     public void setDirection(int newDirection){
         direction = newDirection;
     }
